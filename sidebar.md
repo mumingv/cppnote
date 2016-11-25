@@ -6,6 +6,7 @@
 
 ## 读书笔记
 - [《C++语言导学》](#docs/book_atcpp)
+- [《设计模式GOF》](#docs/book_dp)
 
 ## 网易云课堂微专业
 - [《C++面向对象高级编程（上）》](#docs/class_oop_up)
