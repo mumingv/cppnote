@@ -1,16 +1,40 @@
 # 目录
 
+## 引言
+
+## 实例研究：设计一个文档编辑器
+
+## 创建型模式
+
+## 结构型模式
+
+## 行为型模式
+
 ### 
 
-[第1章 引言](#docs/dpgof_01)
+[CHAIN OF RESPONSIBLILY](#docs/dpgof_5_1)
 
-[第2章 实例研究：设计一个文档编辑器](#docs/dpgof_02)
+[COMMAND](#docs/dpgof_5_2)
 
-[第3章 创建型模式](#docs/dpgof_03)
+[INTERPRETER](#docs/dpgof_5_)
 
-[第4章 结构型模式](#docs/dpgof_04)
+[](#docs/dpgof_5_)
 
-[第5章 行为模式](#docs/dpgof_05)
+[](#docs/dpgof_5_)
 
-[第6章 结论](#docs/dpgof_06)
+[](#docs/dpgof_5_)
+
+[](#docs/dpgof_5_)
+
+[](#docs/dpgof_5_)
+
+[](#docs/dpgof_5_)
+
+5.9 [策略 STRATEGY](#docs/dpgof_5_) (对象行为模式)
+
+5.10 [模板方法 TEMPLATE METHOD](#docs/dpgof_5_10) (类行为模式)
+
+5.11 [访问者 VISITOR](#docs/dpgof_5_11) (对象行为模式)
+
+## 结论
 
