@@ -42,7 +42,7 @@ make: *** [all] Error 1
 
 #### 问题分析
 
-根据提示的错误可以得知，`lib`并未被当作一个类对象(non-class type)。原因是`Library`类的构造函数没有参数，而此时用`Library lib()`的话，就会将`lib`当作一个函数声明而不是对象。
+根据提示的错误可以得知，`lib`并未被当作一个类对象(non-class type)。原因是`Library`类的构造函数没有参数，而此时用`Library lib();`的话，就会将`lib`当作一个函数声明而不是对象。
 
 #### 问题总结
 
