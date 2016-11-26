@@ -7,6 +7,7 @@
 ## C 基础
 
 ## C++ 基础
+- [宏定义](#docs/basic_const)
 - [编译FAQ](#docs/faq_compile)
 
 ## 读书笔记
