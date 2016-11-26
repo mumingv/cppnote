@@ -4,6 +4,11 @@
 
 授权：<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">署名-非商用许可证</a>
 
+## C 基础
+
+## C++ 基础
+- [编译FAQ](#docs/faq_compile)
+
 ## 读书笔记
 - [《C++语言导学》](#docs/book_atcpp)
 - [《设计模式GOF》](#docs/book_dp)
