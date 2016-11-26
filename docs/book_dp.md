@@ -18,18 +18,6 @@
 
 [INTERPRETER](#docs/dpgof_5_)
 
-[](#docs/dpgof_5_)
-
-[](#docs/dpgof_5_)
-
-[](#docs/dpgof_5_)
-
-[](#docs/dpgof_5_)
-
-[](#docs/dpgof_5_)
-
-[](#docs/dpgof_5_)
-
 5.9 [策略 STRATEGY](#docs/dpgof_5_) (对象行为模式)
 
 5.10 [模板方法 TEMPLATE METHOD](#docs/dpgof_5_10) (类行为模式)
