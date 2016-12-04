@@ -97,9 +97,37 @@ USTax.cpp:7:33: error: ‘virtual’ outside class declaration
 ```
 
 
-#### 问题总结
+#### 问题分析
 
 关键字`virtual`只能用在类的声明当中，而不能用在类的定义当中。将函数定义中的`virtual`关键字去掉即可。
+
+
+## error: expected type-specifier before ‘CNTax’
+
+#### 示例代码
+
+链接：[Github](https://github.com/mumingv/cpp/tree/master/netease/major/05_dp/strategy/new)。
+
+
+#### 问题描述
+
+编译文件出现如下错误
+
+```cpp
+$ g++ -c strategy2.cpp 
+strategy2.cpp: In function ‘int main()’:
+strategy2.cpp:25:26: error: expected type-specifier before ‘CNTax’
+     SalesOrder order(new CNTax);
+```
+
+
+#### 问题分析
+
+提示没有找到某个类型，原因是没有包含头文件，在头部包含头文件即可。
+
+```cpp
+#include "CNTax.h"
+```
 
 
 
