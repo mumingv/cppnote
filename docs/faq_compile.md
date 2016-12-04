@@ -62,3 +62,48 @@ Library lib;
 Library lib(param1, param2, ...);
 ```
 
+
+## error: ‘virtual’ outside class declaration
+
+#### 示例代码
+
+链接：[Github](https://github.com/mumingv/cpp/tree/master/netease/major/05_dp/strategy/new)。
+
+
+#### 问题描述
+
+类的声明USTax.h
+
+```cpp
+class USTax : public TaxStrategy {
+public:
+    virtual double Calculate();
+};
+```
+
+类中的函数定义USTax.cpp
+
+```cpp
+virtual double USTax::Calculate() {
+    cout << "Calculate called in USTax" << endl;
+}
+```
+
+编译该类文件，提示如下错误
+
+```cpp
+$ g++ -c USTax.cpp
+USTax.cpp:7:33: error: ‘virtual’ outside class declaration
+```
+
+
+#### 问题总结
+
+关键字`virtual`只能用在类的声明当中，而不能用在类的定义当中。
+
+
+
+
+
+
+
