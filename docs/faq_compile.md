@@ -99,7 +99,7 @@ USTax.cpp:7:33: error: ‘virtual’ outside class declaration
 
 #### 问题总结
 
-关键字`virtual`只能用在类的声明当中，而不能用在类的定义当中。
+关键字`virtual`只能用在类的声明当中，而不能用在类的定义当中。将函数定义中的`virtual`关键字去掉即可。
 
 
 
