@@ -11,6 +11,7 @@
 - [编译FAQ](#docs/faq_compile)
 
 ## 读书笔记
+- [《计算机系统基础》](#docs/book_basic)
 - [《C++语言导学》](#docs/book_atcpp)
 - [《设计模式GOF》](#docs/book_dp)
 
