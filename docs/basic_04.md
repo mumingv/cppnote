@@ -111,7 +111,76 @@ $ gcc -S main.c
 $ cc1 main.c
 ```
 
+
+#### 汇编
+
+示例：将`main.s`转换成`main.o`
+
+```c
+$ gcc -c main.s -o main.o
+```c
+$ as main.s -o main.o
+```
+
+当然，也可以直接通过`.c`文件生成`.o`文件。
+
+```c
+$ gcc -c main.c -o main.o
+```
+
+<font color="red">但是不能使用as命令直接将.c文件生成.o文件，会直接报错。</font>
+
+```c
+$ as main.c -o main.o          
+main.c: Assembler messages:
+main.c:1: Error: junk `(int,int)' after expression
+main.c:1: Error: operand size mismatch for `int'
+main.c:2: Error: junk `()' after expression
+main.c:2: Error: operand size mismatch for `int'
+main.c:3: Error: junk at end of line, first unrecognized character is `{'
+main.c:4: Error: no such instruction: `return add(20,13)'
+main.c:5: Error: junk at end of line, first unrecognized character is `}'
+```
+
+说明：如果不使用`-o`参数的话，会自动生成`main.o`文件。
+
+```c
+$ gcc -c main.s
+```
+
+<font color="red">但是不能使用as命令自动生成main.o文件，不会报错，但会生成一个不能执行的a.out文件，且该文件的内容和main.o的内容完全一样，仅仅是文件名称不同。</font>
+
+```c
+$ as main.s
+$ ls
+a.out  main.c  main.s  test.c
+```
+
+```c
+$ gcc -c main.c
+```
+
+<font color="red">同样，不能使用as命令直接将.c文件生成.o文件，会直接报错。</font>
+
+```c
+$ as main.c
+main.c: Assembler messages:
+main.c:1: Error: junk `(int,int)' after expression
+main.c:1: Error: operand size mismatch for `int'
+main.c:2: Error: junk `()' after expression
+main.c:2: Error: operand size mismatch for `int'
+main.c:3: Error: junk at end of line, first unrecognized character is `{'
+main.c:4: Error: no such instruction: `return add(20,13)'
+main.c:5: Error: junk at end of line, first unrecognized character is `}'
+```
+
+总结：`as`命令只能处理`.s`文件且必须使用`-o`参数指定输出目标文件的名称。
+
+
 ### 可执行目标文件的生成
+
+
+
 
 
 
