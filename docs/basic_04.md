@@ -180,6 +180,25 @@ main.c:5: Error: junk at end of line, first unrecognized character is `}'
 ### 可执行目标文件的生成
 
 
+## 目标文件格式
+
+
+## 符号表和符号解析
+
+
+## 重定位
+
+
+## 可执行文件的加载
+
+
+## 动态链接
+
+
+## 小节
+
+
+
 
 
 
