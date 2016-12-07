@@ -5,6 +5,7 @@
 授权：<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">署名-非商用许可证</a>
 
 ## C 基础
+- [相关命令](#docs/c_cmd)
 
 ## C++ 基础
 - [宏定义](#docs/basic_const)
