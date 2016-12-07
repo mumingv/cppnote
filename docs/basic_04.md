@@ -1,6 +1,6 @@
 # 程序的链接
 
-## 编译、汇编和静态链接
+## 预处理、编译、汇编和静态链接
 
 将高级语言源程序文件转换为可执行文件分为四个步骤，分别是：预处理、编译、汇编和链接。
 
@@ -13,7 +13,7 @@
 --汇编(as/gcc -c)-->  .o  --链接(ld/gcc)-->  a.out
 ```
 
-### 编译和汇编
+### 预处理、编译和汇编
 
 说明：下面的命令使用的代码，请：[点击](https://github.com/mumingv/c/tree/master/books/computer_system_basic/04_link/4.1.2.main)。
 
@@ -179,6 +179,54 @@ main.c:5: Error: junk at end of line, first unrecognized character is `}'
 
 ### 可执行目标文件的生成
 
+#### 链接
+
+示例：将`main.o`、`test.o`转换成可执行文件`main`
+
+```c
+$ gcc main.o test.o -o main
+```
+
+Q: 直接根据教材使用`ld`命令进行链接操作的话，会产生如下的错误。
+```c
+$ ld main.o test.o -o main
+ld: warning: cannot find entry symbol _start; defaulting to 00000000004000b0
+```
+A: 在x86-64的gcc环境下，使用`ld`命令的时候需要增加一些参数和选项，如下所示：
+```c
+$ ld --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o main /usr/lib/gcc/x86_64-redhat-linux/4.8.2/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/4.8.2/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/4.8.2/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/4.8.2 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.2/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.2/../../.. main.o test.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-redhat-linux/4.8.2/crtend.o /usr/lib/gcc/x86_64-redhat-linux/4.8.2/../../../../lib64/crtn.o
+```
+注：上面的链接选项根据命令`gcc -v main.o test.o -o main`查询编译过程详情得到，GCC用的链接器是`collect2`，其实基于`ld`命令的一层封装，它们的参数是一致的。
+
+参考资料：[The True Story of Hello World](http://www.lisha.ufsc.br/teaching/os/exercise/hello.html)。
+
+当然，也可以直接通过`.c`文件生成可执行文件。
+
+```c
+$ gcc main.c test.c -o main
+```
+
+<font color="red">但是不能使用ld命令自动生成可执行文件，会报直接报错。</font>
+
+```c
+$ ld --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o main /usr/lib/gcc/x86_64-redhat-linux/4.8.2/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/4.8.2/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/4.8.2/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/4.8.2 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.2/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.2/../../.. main.c test.c -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-redhat-linux/4.8.2/crtend.o /usr/lib/gcc/x86_64-redhat-linux/4.8.2/../../../../lib64/crtn.o
+ld:main.c: file format not recognized; treating as linker script
+ld:main.c:1: syntax error
+```
+
+说明：如果不使用-o参数的话，会自动生成可执行文件，不过文件名称固定为`a.out`。
+
+```c
+$ gcc main.c test.c
+```
+
+<font color="red">同样，不能使用ld命令自动生成可执行文件，会报直接报错。</font>
+
+```c
+$ ld --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 /usr/lib/gcc/x86_64-redhat-linux/4.8.2/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/4.8.2/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/4.8.2/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/4.8.2 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.2/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.2/../../.. main.c test.c -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-redhat-linux/4.8.2/crtend.o /usr/lib/gcc/x86_64-redhat-linux/4.8.2/../../../../lib64/crtn.o        
+ld:main.c: file format not recognized; treating as linker script
+ld:main.c:1: syntax error
+```
 
 ## 目标文件格式
 
