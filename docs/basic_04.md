@@ -228,6 +228,103 @@ ld:main.c: file format not recognized; treating as linker script
 ld:main.c:1: syntax error
 ```
 
+
+#### 可重定位目标文件 vs 可执行目标文件
+
+相同点：都是机器语言目标文件
+
+不同点：
+- 可重定位目标文件是由单个模块生成的；可执行目标文件是由多个模块组合而成的；
+- 可重定位目标文件的代码地址总是从0开始；可执行目标文件的代码地址不是从0开始的，而是在操作系统规定的虚拟地址空间中产生的；
+
+关于目标文件的代码地址可以使用反汇编命令进行查询：
+
+```c
+$ objdump -d test.o
+test.o:     file format elf64-x86-64
+Disassembly of section .text:
+0000000000000000 <add>:
+   0:   55                      push   %rbp
+   1:   48 89 e5                mov    %rsp,%rbp
+   4:   89 7d ec                mov    %edi,-0x14(%rbp)
+   7:   89 75 e8                mov    %esi,-0x18(%rbp)
+   a:   8b 45 e8                mov    -0x18(%rbp),%eax
+   d:   8b 55 ec                mov    -0x14(%rbp),%edx
+  10:   01 d0                   add    %edx,%eax
+  12:   89 45 fc                mov    %eax,-0x4(%rbp)
+  15:   8b 45 fc                mov    -0x4(%rbp),%eax
+  18:   5d                      pop    %rbp
+  19:   c3                      retq   
+```
+
+```c
+$ objdump -d a.out 
+a.out:     file format elf64-x86-64
+...
+Disassembly of section .text:
+...
+0000000000400508 <add>:
+  400508:       55                      push   %rbp
+  400509:       48 89 e5                mov    %rsp,%rbp
+  40050c:       89 7d ec                mov    %edi,-0x14(%rbp)
+  40050f:       89 75 e8                mov    %esi,-0x18(%rbp)
+  400512:       8b 45 e8                mov    -0x18(%rbp),%eax
+  400515:       8b 55 ec                mov    -0x14(%rbp),%edx
+  400518:       01 d0                   add    %edx,%eax
+  40051a:       89 45 fc                mov    %eax,-0x4(%rbp)
+  40051d:       8b 45 fc                mov    -0x4(%rbp),%eax
+  400520:       5d                      pop    %rbp
+  400521:       c3                      retq   
+  400522:       66 2e 0f 1f 84 00 00    nopw   %cs:0x0(%rax,%rax,1)
+  400529:       00 00 00 
+  40052c:       0f 1f 40 00             nopl   0x0(%rax)
+...
+```
+
+目标文件中包含如下一些信息区（也叫做节/段，section）
+- .init 程序初始化代码段
+- .fini 程序终结代码段
+- .text 代码段
+- .rodata 只读数据段
+- .data 已初始化的全局数据段
+- .bss 未初始化的全局数据段
+- .plt 动态链接的跳转表
+- ...
+
+*CentOS 7的x86-64位环境中编译32为程序，会报如下错误。*
+
+```c
+$ gcc main.c test.c -m32
+/usr/bin/ld: cannot find crt1.o: No such file or directory
+/usr/bin/ld: cannot find crti.o: No such file or directory
+/usr/bin/ld: skipping incompatible /usr/lib/gcc/x86_64-redhat-linux/4.8.2/libgcc_s.so when searching for -lgcc_s
+/usr/bin/ld: cannot find -lgcc_s
+/usr/bin/ld: skipping incompatible /usr/lib64/libc.so when searching for -lc
+/usr/bin/ld: cannot find -lc
+/usr/bin/ld: skipping incompatible /usr/lib/gcc/x86_64-redhat-linux/4.8.2/libgcc_s.so when searching for -lgcc_s
+/usr/bin/ld: cannot find -lgcc_s
+/usr/bin/ld: cannot find crtn.o: No such file or directory
+collect2: error: ld returned 1 exit status
+```
+
+
+### 链接器的作用
+
+1.符号解析(symbol resolution)
+
+符号解析的目的就是将每个符号的引用与一个确定的符号定义建立关联。程序中有被定义的符号和被引用的符号，这些符号包括变量名和函数名。
+
+编译器将所有符号存放在可重定位目标文件的符号表(symbol table)中。符号表是一个结构数组，每个表项包含符号名、长度和位置信息等。
+
+2.重定位(relocation)
+
+重定位是指重新确定代码和数据的地址并更新指令中被引用符号地址的工作。
+
+可重定位目标文件中的代码区和数据区都是从地址0开始的，链接器需要将不同模块中相同的段合并起来生成一个新的单独的段，并将合并后的代码区和数据区按照操作系统确定的虚拟地址空间划分（也叫存储器映像）来重新确定位置。
+
+*对于32位Linux系统存储器映像，其代码段总是从地址0x08048000开始，而数据段总是在代码段后面的第一个4KB对齐的地址处开始。*
+
+
 ## 目标文件格式
 
 
