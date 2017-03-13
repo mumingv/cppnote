@@ -2,6 +2,20 @@
 
 ## gcc
 
+*gcc - GNU project C and C++ compiler*
+
+常用参数：
+0. -fPIC  生成目标无关代码
+0. -shared  生成共享代码
+
+###  
+
+#### 生成.so动态链接库
+
+```c
+g++ -fPIC -shared -o output/lib/libdict.so src/libdict.cpp
+```
+
 
 ## cpp
 
@@ -17,6 +31,21 @@
 
 ## ar
 
+*ar - create, modify, and extract from archives*
+
+常用参数：
+0. -c  创建
+0. -r  将文件插入archive
+0. -v  verbose
+
+###  
+
+#### 生成.a静态链接库
+
+```c
+g++ -c src/libdict.cpp -o output/lib/libdict.o
+ar -crv output/lib/libdict.a output/lib/libdict.o
+```
 
 ## gdb
 
@@ -28,7 +57,9 @@
 常用参数：
 0. -d --disassemble  反汇编
 
-### 反汇编可重定位目标文件(.o)
+### 
+
+#### 反汇编可重定位目标文件(.o)
 
 ```c
 $ objdump -d test.o
@@ -51,7 +82,9 @@ Disassembly of section .text:
 反汇编输出的结果中，包含的信息有：指令的地址、指令的机器代码、指令的汇编代码。
 
 
-### 反汇编可执行文件(a.out)
+### 
+
+#### 反汇编可执行文件(a.out)
 
 ```c
 $ objdump -d a.out 
