@@ -17,6 +17,13 @@ g++ -fPIC -shared -o output/lib/libdict.so src/libdict.cpp
 ```
 
 
+#### 同时编译.cpp和.a文件
+
+```c
+g++ -o ./output/test test.cpp ../output/lib/libdict.a
+```
+
+
 ## cpp
 
 
