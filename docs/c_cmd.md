@@ -7,6 +7,8 @@
 常用参数：
 0. -fPIC  生成目标无关代码
 0. -shared  生成共享代码
+0. -Ldir  指定增加库搜索的目录
+0. -llibrary  指定库的名称，对应库的文件名称为liblibrary.a
 
 ###  
 
